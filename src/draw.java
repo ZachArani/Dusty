@@ -31,7 +31,7 @@ public class draw extends JPanel implements Runnable
 	static int thisX,thisY; //Just used to tell Dot[][] what the currently selected X and Y coorinates are.
 	static int coin; //Flipped when a random int is needed. May have more than two sides. No, it's not a die, shut up.
 	static int parts, dirts, waters, others; //Used to show how many of each element there are on-screen.
-	static int size = 4; //Scale of the screen. Doesn't change the number of tiles, just the size of them.
+	static int size = 3; //Scale of the screen. Doesn't change the number of tiles, just the size of them.
 	static int gravity = 1;
 	static int temp = 100; //Room Temperature. This is the number temp tiles will slowly fade to over time.
 	static int screenLength = 200; //Number of rows in dot matrix.
@@ -57,22 +57,9 @@ public class draw extends JPanel implements Runnable
     	for(int y = screenLength - 1; y >= 0; y--)
 		{
 			for(int x = screenWidth - 1; x >= 0; x--)
-			{    	    	
-    	    	// Fill screen
-    	    	/*if(y >= 100)
-    	    		Dot[x][y] = new water();
-    	    	else
+			{   
     	    		Dot[x][y] = new air();
-    	    	if(y > 100 && y < screenLength)
-    	    		Dot[x][y] = new water();*/
-    	    	
-    	    	// Sprinkle screen
-    	    	/*if(coin == 10)
-    	    		Dot[x][y] = new dye(random.nextInt(200), random.nextInt(200), random.nextInt(200));
-    	    	else*/
-    	    		Dot[x][y] = new air();
-    	    	/*if(coin == 11)
-    	    		Dot[x][y] = new water();*/
+
     	    }
     	}
     	
@@ -88,14 +75,15 @@ public class draw extends JPanel implements Runnable
  
     }
     
+    
+    
     public void updateMouse()
     {
     	a = MouseInfo.getPointerInfo();
     	mouseX2 = mouseX;
     	mouseY2 = mouseY;
-    	mouseX = a.getLocation().x - 5;
-    	mouseY = a.getLocation().y - 29;
-    	mouseX = shapes.getX();
+    	mouseX = a.getLocation().x - this.getLocationOnScreen().x;
+    	mouseY = a.getLocation().y - this.getLocationOnScreen().y;
     }
     
     public void start()
@@ -128,7 +116,7 @@ public class draw extends JPanel implements Runnable
     	    mouseClicked = false;
     	    
     		try {
-				Thread.sleep(30); //Milliseconds between frames.
+				Thread.sleep(20); //Milliseconds between frames.
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -284,6 +272,8 @@ public class draw extends JPanel implements Runnable
 		g.drawString("Other: " + draw.others, 2, 30);
 		g.drawString("Total: " + draw.parts, 2, 40);
 		g.drawString("Choice: " + draw.choice, 2, 50);
+		g.drawString("Mouse X: " + shapes.getX() , 2, 60);
+		g.drawString("Mouse Y: " + shapes.getY(), 2, 70);
 		
 	}
 }

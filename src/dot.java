@@ -11,8 +11,10 @@ public class dot //This is what the game is centered around - dot entities. This
 	int xVel = 0;  //X velocity in dots/frame.
 	int yVel = 0;  //Y velocity in dots/frame.
 	boolean moved;  //Whether or not this dot has moved this frame.
+	boolean isFalling = false; //state of if the dot is falling or not.
 	Color color;  //Color of the dot.
 	ArrayList<dot> Dissolved = new ArrayList<dot>();  //Dots currently inside this dot.
+	boolean rushOngoing = false;
 	
 	/*------------------PHYSICAL PROPERTIES-------------------*/
 	int id;  //What element this dot is
@@ -54,17 +56,39 @@ public class dot //This is what the game is centered around - dot entities. This
 	}
 	
 	public void rush(int xx, int yy) //Move dot as close to [x][y] as possible, stopping when it hits anything that isn't air.
-	{
-		a = x;
-		c = x;
-		b = y;
-		d = y;
-		
-		while(true) //X = a, Y = b
+	{	
+		rushOngoing = true;
+		System.out.println(x + " " + y + " " + xx + " " + yy);
+		while(xx!=x || yy!=y)
 		{
-			move(x,y + 1);
-			break;
+			System.out.println("RUSH ONGOING, Current X value is: " + x + ", Current Y Value is: " + y + ", Current xx Value is: " + xx + ", Current yy Value is:" + yy);
+			if(xx!=x && yy!=y){
+				System.out.println("event1"); move(x+1,y+1);}
+			else if(xx!=x && yy==y){
+				System.out.println("event2"); move(x+1, y);}
+			else
+				System.out.println("event2");//move(x,y+1);
 		}
+		rushOngoing = false;	
+		
+	}
+	
+	public void rushDirection(String direction){
+		switch(direction){
+			case "up":
+				rush(x,0); System.out.println("up"); break;
+			case "down":
+				rush(x, draw.screenLength); System.out.println("down"); break;
+			case "right":
+				rush(draw.screenWidth, y); /*System.out.println("right");*/ break;
+			case "left":
+				rush(0,y); System.out.println("left"); break; 
+			default:
+				rush(x,draw.screenLength);
+				
+		}
+		
+		
 	}
 	
 	public void move(int xx, int yy) //Swaps this dot with target dot.
@@ -233,4 +257,11 @@ public class dot //This is what the game is centered around - dot entities. This
 		else
 			return false;
 	}
+	
+	public boolean canFall(int x, int y){
+		if(canMove(x+1,y+1))
+				return true;
+		return false;
+	}
+	
 }

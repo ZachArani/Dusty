@@ -23,10 +23,12 @@ public class dye extends dot
 		if(moved == false)
 		if(canMove(x + xVel, y + yVel + draw.gravity) == true || canMove(x + xVel, y + yVel + draw.gravity, 2) == true) //If dot can move down
 		{
+			this.isFalling = true;
 			move(x + xVel, y + yVel + draw.gravity);
 		}
 		else
 		{
+			this.isFalling = false;
 			xVel = 0;
 			yVel = 0;
 		}

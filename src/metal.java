@@ -7,7 +7,7 @@ public class metal extends dot
 	{
 		id = 4;
 		density = 10;
-		color = new Color(100, 100, 100);
+		color = new Color(draw.random.nextInt(40) + 100, draw.random.nextInt(40)+ 100, 100);
 		soluable = false;
 	}
 	
