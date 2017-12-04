@@ -1,2 +1,2 @@
 # Dusty
-Like Dust, but worse. (And Open Source, or si it?)
+Like Dust, but worse. (And Open Source, or is it?)
