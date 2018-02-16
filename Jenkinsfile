@@ -1,20 +1,48 @@
 pipeline {
   agent any
   stages {
-    stage('Print ') {
-      steps {
-        echo 'I\'ll add tests eventually'
+    stage('Build') {
+      parallel {
+        stage('Version') {
+          when {
+            not {
+              environment name: 'createTag', value: ''
+            }
+            
+          }
+          steps {
+            echo "${params.createTag}"
+          }
+        }
+        stage('Snapshot') {
+          when {
+            not {
+              environment name: 'head', value: ''
+            }
+            
+          }
+          steps {
+            echo "${params.head}"
+          }
+        }
+        stage('Pull Request') {
+          when {
+            allOf {
+              environment name: 'createTag', value: ''
+              environment name: 'head', value: ''
+            }
+            
+          }
+          steps {
+            echo 'Pull Request'
+          }
+        }
       }
     }
-    stage('Check') {
-      steps {
-        isUnix()
-      }
-    }
-    stage('Done') {
-      steps {
-        echo 'Running on unix node'
-      }
-    }
+  }
+  parameters {
+    string(name: 'createTag', defaultValue: '', description: '')
+    string(name: 'head', defaultValue: '', description: '')
+    booleanParam(name: 'isCreate', defaultValue: false)
   }
 }
